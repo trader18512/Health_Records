@@ -1,0 +1,13 @@
+{
+    "canisters": {
+        "Health_Records": {
+            "type": "custom",
+            "main": "src/index.ts",
+            "candid": "src/index.did",
+            "build": "npx azle Health_Records",
+            "wasm": ".azle/Health_Records/Health_Records.wasm",
+            "gzip": true
+        }
+    }
+}
+
