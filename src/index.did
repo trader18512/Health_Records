@@ -1,7 +1,27 @@
-service: () -> {
-    addPatient: (record {age:nat64; bloodType:text; name:text; medicalHistory:text; gender:text}) -> (variant {Ok:record {id:text; age:nat64; bloodType:text; name:text; createdAt:nat64; updatedAt:opt nat64; medicalHistory:text; gender:text}; Err:variant {InvalidPayload:text; NotFound:text}});
-    deletePatient: (text) -> (variant {Ok:record {id:text; age:nat64; bloodType:text; name:text; createdAt:nat64; updatedAt:opt nat64; medicalHistory:text; gender:text}; Err:variant {InvalidPayload:text; NotFound:text}});
-    getPatient: (text) -> (variant {Ok:record {id:text; age:nat64; bloodType:text; name:text; createdAt:nat64; updatedAt:opt nat64; medicalHistory:text; gender:text}; Err:variant {InvalidPayload:text; NotFound:text}}) query;
-    getPatients: () -> (variant {Ok:vec record {id:text; age:nat64; bloodType:text; name:text; createdAt:nat64; updatedAt:opt nat64; medicalHistory:text; gender:text}; Err:variant {InvalidPayload:text; NotFound:text}}) query;
-    updatePatient: (text, record {age:nat64; bloodType:text; name:text; medicalHistory:text; gender:text}) -> (variant {Ok:record {id:text; age:nat64; bloodType:text; name:text; createdAt:nat64; updatedAt:opt nat64; medicalHistory:text; gender:text}; Err:variant {InvalidPayload:text; NotFound:text}});
+type Error = variant { InvalidPayload : text; NotFound : text };
+type Patient = record {
+  id : text;
+  age : nat64;
+  bloodType : text;
+  name : text;
+  createdAt : nat64;
+  updatedAt : opt nat64;
+  medicalHistory : text;
+  gender : text;
+};
+type PatientPayload = record {
+  age : nat64;
+  bloodType : text;
+  name : text;
+  medicalHistory : text;
+  gender : text;
+};
+type _AzleResult = variant { Ok : Patient; Err : Error };
+type _AzleResult_1 = variant { Ok : vec Patient; Err : Error };
+service : () -> {
+  addPatient : (PatientPayload) -> (_AzleResult);
+  deletePatient : (text) -> (_AzleResult);
+  getPatient : (text) -> (_AzleResult) query;
+  getPatients : () -> (_AzleResult_1) query;
+  updatePatient : (text, PatientPayload) -> (_AzleResult);
 }
